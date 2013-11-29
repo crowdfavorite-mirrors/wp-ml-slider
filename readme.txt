@@ -4,7 +4,7 @@ Tags: widget,wordpress slider,slideshow,wordpress slideshow,image slider,flexsli
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CQ84KC4X8YKW8
 Requires at least: 3.5
 Tested up to: 3.7
-Stable tag: 2.5-beta1
+Stable tag: 2.5-beta2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,6 +52,7 @@ Meta Slider has been translated into the following languages:
 
 * French (thanks to fb-graphiklab)
 * Spanish (thanks to eltipografico)
+* German (thanks to Rewolve44)
 * Polish (thanks to gordon34)
 * Chinese (thanks to 断青丝)
 
@@ -139,6 +140,12 @@ Coin Slider is not responsive. This means (unlike the other slideshows in Meta S
 6. Administration panel - selecting slides
 
 == Changelog ==
+
+= 2.5 [25/11/13] =
+* Fix: JetPack Photon conflict
+* Improvement: German Language pack added (thanks to gordon34)
+* Improvement: Chinese language pack updated (thanks to 断青丝)
+* Improvement: MP6 styling fixes
 
 = 2.5-beta2 [14/11/13] =
 * Fix: Vantage theme backwards compatibility

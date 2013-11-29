@@ -216,13 +216,10 @@ class MetaSliderImageHelper {
         $size = array();
 
         // try and get the image size from metadata
-        if ($image_attributes = wp_get_attachment_image_src($this->id, 'full')) {
-            $size['width'] = $image_attributes[1];
-            $size['height'] = $image_attributes[2];
+        $meta = wp_get_attachment_metadata($this->id);
 
-            if ($size['width'] > 0 && $size['height'] > 0) {
-                return $size;
-            }
+        if (isset($meta['width'], $meta['height'])) {
+            return $meta;
         }
 
         if ($this->use_image_editor) {
