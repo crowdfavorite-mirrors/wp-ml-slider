@@ -44,7 +44,7 @@ class MetaImageSlide extends MetaSlide {
                     $this->settings['width'] = 0;
                     $this->settings['height'] = 0;
 
-                    echo $this->get_admin_slide();                   
+                    echo $this->get_admin_slide();
                 }
             }
         }
@@ -69,8 +69,8 @@ class MetaImageSlide extends MetaSlide {
         // create a copy of the correct sized image
         $imageHelper = new MetaSliderImageHelper(
             $slide_id,
-            $settings['width'], 
-            $settings['height'], 
+            $settings['width'],
+            $settings['height'],
             isset($settings['smartCrop']) ? $settings['smartCrop'] : 'false',
             $this->use_wp_image_editor()
         );
@@ -84,7 +84,7 @@ class MetaImageSlide extends MetaSlide {
 
     /**
      * Return the HTML used to display this slide in the admin screen
-     * 
+     *
      * @return string slide html
      */
     protected function get_admin_slide() {
@@ -101,13 +101,16 @@ class MetaImageSlide extends MetaSlide {
         $str_caption    = __("Caption", 'metaslider');
         $str_new_window = __("New Window", 'metaslider');
         $str_url        = __("URL", 'metaslider');
+        $str_label      = __("Image Slide", "metaslider");
+
+        $slide_label = apply_filters("metaslider_image_slide_label", $str_label, $this->slide, $this->settings);
 
         // slide row HTML
         $row  = "<tr class='slide image flex responsive nivo coin'>";
         $row .= "    <td class='col-1'>";
         $row .= "        <div class='thumb' style='background-image: url({$thumb})'>";
         $row .= "            <a class='delete-slide confirm' href='?page=metaslider&amp;id={$this->slider->ID}&amp;deleteSlide={$this->slide->ID}'>x</a>";
-        $row .= "            <span class='slide-details'>" . __("Image Slide", "metaslider") . "</span>";
+        $row .= "            <span class='slide-details'>" . $slide_label . "</span>";
         $row .= "        </div>";
         $row .= "    </td>";
         $row .= "    <td class='col-2'>";
@@ -115,7 +118,7 @@ class MetaImageSlide extends MetaSlide {
         $row .= "            <li class='selected' rel='tab-1'>" . __("General", "metaslider") . "</li>";
         $row .= "            <li rel='tab-2'>" . __("SEO", "metaslider") . "</li>";
         $row .= "        </ul>";
-        $row .= "        <div class='tabs-content'>"; 
+        $row .= "        <div class='tabs-content'>";
         $row .= "            <div class='tab tab-1'>";
         if (!$this->is_valid_image()) {
             $row .= "<div class='warning'>" . __('Warning: Image data does not exist. Please re-upload the image.') . "</div>";
@@ -165,7 +168,7 @@ class MetaImageSlide extends MetaSlide {
 
     /**
      * Returns the HTML for the public slide
-     * 
+     *
      * @return string slide html
      */
     protected function get_public_slide() {
@@ -173,8 +176,8 @@ class MetaImageSlide extends MetaSlide {
         // disable wp_image_editor if metadata does not exist for the slide
         $imageHelper = new MetaSliderImageHelper(
             $this->slide->ID,
-            $this->settings['width'], 
-            $this->settings['height'], 
+            $this->settings['width'],
+            $this->settings['height'],
             isset($this->settings['smartCrop']) ? $this->settings['smartCrop'] : 'false',
             $this->use_wp_image_editor()
         );
@@ -186,14 +189,14 @@ class MetaImageSlide extends MetaSlide {
             'id' => $this->slide->ID,
             'url' => __(get_post_meta($this->slide->ID, 'ml-slider_url', true)),
             'title' => __(get_post_meta($this->slide->ID, 'ml-slider_title', true)),
-            'target' => get_post_meta($this->slide->ID, 'ml-slider_new_window', true) ? '_blank' : '_self', 
+            'target' => get_post_meta($this->slide->ID, 'ml-slider_new_window', true) ? '_blank' : '_self',
             'src' => $thumb,
             'thumb' => $thumb, // backwards compatibility with Vantage
             'width' => $this->settings['width'],
             'height' => $this->settings['height'],
             'alt' => __(get_post_meta($this->slide->ID, '_wp_attachment_image_alt', true)),
-            'caption' => __(html_entity_decode($this->slide->post_excerpt, ENT_NOQUOTES, 'UTF-8')),
-            'caption_raw' => __($this->slide->post_excerpt),
+            'caption' => __(html_entity_decode(do_shortcode($this->slide->post_excerpt), ENT_NOQUOTES, 'UTF-8')),
+            'caption_raw' => __(do_shortcode($this->slide->post_excerpt)),
             'class' => "slider-{$this->slider->ID} slide-{$this->slide->ID}",
             'rel' => "",
             'data-thumb' => ""
@@ -223,7 +226,7 @@ class MetaImageSlide extends MetaSlide {
 
     /**
      * Generate nivo slider markup
-     * 
+     *
      * @return string slide html
      */
     private function get_nivo_slider_markup($slide) {
@@ -255,7 +258,7 @@ class MetaImageSlide extends MetaSlide {
 
     /**
      * Generate flex slider markup
-     * 
+     *
      * @return string slide html
      */
     private function get_flex_slider_markup($slide) {
@@ -286,7 +289,7 @@ class MetaImageSlide extends MetaSlide {
         }
 
         $thumb = isset($slide['data-thumb']) && strlen($slide['data-thumb']) ? " data-thumb=\"{$slide['data-thumb']}\"" : "";
-        
+
         $html = '<li style="display: none;"' . $thumb . '>' . $html . '</li>';
 
         return apply_filters('metaslider_image_flex_slider_markup', $html, $slide, $this->settings);
@@ -294,7 +297,7 @@ class MetaImageSlide extends MetaSlide {
 
     /**
      * Generate coin slider markup
-     * 
+     *
      * @return string slide html
      */
     private function get_coin_slider_markup($slide) {
@@ -326,7 +329,7 @@ class MetaImageSlide extends MetaSlide {
 
     /**
      * Generate responsive slides markup
-     * 
+     *
      * @return string slide html
      */
     private function get_responsive_slides_markup($slide) {
