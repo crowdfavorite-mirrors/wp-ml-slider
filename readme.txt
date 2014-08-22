@@ -3,8 +3,8 @@ Contributors: matchalabs
 Tags: wordpress slideshow,seo,slideshow,slider,widget,wordpress slider,image slider,flexslider,flex slider,nivoslider,nivo slider,responsive,responsive slides,coinslider,coin slider,slideshow,carousel,responsive slider,vertical slides
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CQ84KC4X8YKW8
 Requires at least: 3.5
-Tested up to: 3.8
-Stable tag: 2.7.2
+Tested up to: 3.9
+Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Easy to use WordPress slider plugin. Create SEO optimised responsive slideshows 
 
 == Description ==
 
-http://www.youtube.com/watch?v=I7IfkV6iLqo
+http://www.youtube.com/watch?v=o0f3uAvL6Ic
 
 The most popular WordPress slider plugin. Creating slideshows with [Meta Slider](http://www.metaslider.com/) is fast and easy. Simply select images from your WordPress Media Library, drag and drop them into place, set slide captions, links and SEO fields all from one page. You can choose from 4 different slideshow types (Flex Slider, Nivo Slider, Responsive Slides & Coin Slider) and use the provided shortcode or template include to easily embed slideshows in your blog.
 
@@ -32,6 +32,7 @@ The most popular WordPress slider plugin. Creating slideshows with [Meta Slider]
 * Drag and drop slide reordering
 * Admin preview
 * Intelligent image cropping
+* Set image crop position
 * Built in Widget and Shortcode
 * Loads of slideshow configuration options - transition effect, speed etc (per slideshow)
 * Fully localised
@@ -39,7 +40,8 @@ The most popular WordPress slider plugin. Creating slideshows with [Meta Slider]
 * Compatible with translation plugins (WPML, PolyLang & qTranslate)
 * Extensive Developer API (hooks & filters)
 * Fast - only the minimum JavaScript/CSS is included on your page
-* Free, active, basic support (covering installation issues and theme/plugin conflicts)
+* Free basic support (covering installation issues and theme/plugin conflicts)
+* Lightbox support with the [Meta Slider Lightbox](http://wordpress.org/plugins/ml-slider-lightbox/) addon
 
 Upgrade to [Meta Slider Pro](http://www.metaslider.com/upgrade) to add support for:
 
@@ -61,16 +63,22 @@ Upgrade to [Meta Slider Pro](http://www.metaslider.com/upgrade) to add support f
 * Taiwanese (thanks to 断青丝)
 * Norwegian (thanks to Dreamsoft)
 * Romanian (thanks to Octav Madalin Stanoaia)
+* Japanese (thanks to Dorrie)
+* Persian (thanks to aliamini)
+* Hungarian (thanks to szripio)
 * Croatian
+* Hebrew (thanks to Ahrale)
 
 Read more and thanks to:
 
-* [http://flexslider.woothemes.com/](http://flexslider.woothemes.com/)
-* [http://responsive-slides.viljamis.com/](http://responsive-slides.viljamis.com/)
-* [http://workshop.rs/projects/coin-slider/](http://workshop.rs/projects/coin-slider/)
-* [http://dev7studios.com/nivo-slider/](http://dev7studios.com/nivo-slider/)
+* [Flex Slider](http://flexslider.woothemes.com/)
+* [Responsive Slides](http://responsive-slides.viljamis.com/)
+* [Coin Slider](http://workshop.rs/projects/coin-slider/)
+* [Nivo Slider](http://dev7studios.com/nivo-slider/)
 
 Find out more at http://www.metaslider.com
+
+Follow us on Twitter: [@wpmetaslider](https://twitter.com/wpmetaslider)
 
 == Installation ==
 
@@ -105,13 +113,11 @@ You will need to paste the "Template Include" code into your theme (you can find
 * Find the correct place to add it (for example above or below the logo)
 * Paste in the code and save.
 
-If you want to include the slideshow on your homepage only, use this code:
+= I only want to show the slideshow on my homepage, how can I do that? =
 
-`<?php
-if (is_front_page() || is_home()) {
-    echo do_shortcode("[metaslider id=123]"); //replace 123 with slider ID
-}
-?>`
+Add the 'restrict_to' parameter to the shortcode, eg:
+
+`[metaslider id=XXX restrict_to=home]");`
 
 Theme specific instructions:
 
@@ -138,7 +144,56 @@ See www.metaslider.com/documentation/image-cropping/
 
 == Changelog ==
 
-= 2.8-beta [16 / 04 / 14] =
+= 3.0.1 [19/08/14] =
+
+* Fix: Escape admin setting text fields
+* Fix: Escape admin tab names (thanks to Dylan Irzi for spotting and reporting this!)
+* Change: Allow shortcode parameters to be filtered
+
+= 3.0 [30/07/14] =
+
+**This is not a major update. We're just following the WordPress versioning conventions (3.0 comes after 2.9)**
+
+* New feature: Set crop position for slides (requires WP 3.9+)
+* New feature: Disable cropping setting
+* Fix: Use get_posts instead of WP_Query to extract slideshows (fix conflicts with plugins using get_post_type in admin_footer hooks)
+* Change: Add filter for capability required to use meta slider
+
+= 2.9.1 [15/07/14] =
+
+* New feature: Hungarian Language Pack added
+* Fix: Escape attributes and JS in slideshow output (credit to jwenerd!)
+* Fix: Escape attributes and text fields in admin
+* New feature: Admin slide tabs can be modified with filters
+
+= 2.9 [25/06/14] =
+
+* New feature: Japanese Language Pack added
+* New feature: Persian Language Pack added
+* New feature: Switch between tab and list view
+* New feature: Added ms-left and ms-right css classes to align slideshow to left or right
+* Improvement: Flex Slider updated to 2.3.0-bleeding (fix initial image fade)
+* Fix: reference to window.parent in media library
+* Fix: Thumbnail outline in firefox
+
+= 2.8.1 [28/04/14] =
+
+* Fix: All in One Events Calendar conflict fix (Advanced Settings not toggling)
+* Fix: CSS resets to avoid theme conflicts
+* Fix: Autoload visibility conflict (http://wordpress.org/support/topic/autoload-visibillity-conflict)
+* Fix: Layer Editor in IE11 - text fields not accessible in modal windows
+* Fix: FlexSlider IE11 Fade transition
+
+= 2.8 [28/04/14] =
+
+* New feature: Russian Language Pack added
+* Fix: Carousel image scaling in FireFox
+* Fix: wpautop issue with double ampersand
+* New feature: Shortcode parameter added to restrict slideshow to displaying on homepage only (see FAQ)
+* Improvement: Save slideshow after reordering slides
+* Fix: PHP Warning when no slideshows have been created
+
+= 2.8-beta [16/04/14] =
 
 * Improvement: Preview now uses admin-post action
 * Improvement: Classes are now auto loaded to reduce memory footprint
