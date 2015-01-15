@@ -8,10 +8,14 @@ class MetaImageSlide extends MetaSlide {
      * Register slide type
      */
     public function __construct() {
+
+        parent::__construct();
+        
         add_filter( 'metaslider_get_image_slide', array( $this, 'get_slide' ), 10, 2 );
         add_action( 'metaslider_save_image_slide', array( $this, 'save_slide' ), 5, 3 );
         add_action( 'wp_ajax_create_image_slide', array( $this, 'ajax_create_slide' ) );
         add_action( 'wp_ajax_resize_image_slide', array( $this, 'ajax_resize_slide' ) );
+
     }
 
     /**
@@ -111,6 +115,7 @@ class MetaImageSlide extends MetaSlide {
                     <td class='col-1'>
                         <div class='thumb' style='background-image: url({$thumb})'>
                             " . $this->get_delete_button_html() . "
+                            " . $this->get_change_image_button_html() . "
                             <span class='slide-details'>{$slide_label}</span>
                         </div>
                     </td>
@@ -354,9 +359,24 @@ class MetaImageSlide extends MetaSlide {
             $html .= '<div class="caption-wrap"><div class="caption">' . $slide['caption'] . '</div></div>';
         }
 
-        $thumb = isset( $slide['data-thumb'] ) && strlen( $slide['data-thumb'] ) ? " data-thumb=\"{$slide['data-thumb']}\"" : "";
+        $attributes = apply_filters( 'metaslider_flex_slider_list_item_attributes', array(
+                'data-thumb' => isset($slide['data-thumb']) ? $slide['data-thumb'] : "",
+                'style' => "display: none; width: 100%;",
+                'class' => "slide-{$this->slide->ID} ms-image"
+            ), $slide, $this->slider->ID );
 
-        $html = '<li style="display: none; width: 100%;"' . $thumb . '>' . $html . '</li>';
+        $li = "<li";
+
+        foreach ( $attributes as $att => $val ) {
+            if ( strlen( $val ) ) {
+                $li .= " " . $att . '="' . esc_attr( $val ) . '"';
+            }
+        }
+
+        $li .= ">" . $html . "</li>";
+
+        $html = $li;
+
 
         return apply_filters( 'metaslider_image_flex_slider_markup', $html, $slide, $this->settings );
 
